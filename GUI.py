@@ -1,5 +1,5 @@
 from tkinter import *
-
+import own
 
 #Definitionen
 #-----------------------------------------------
@@ -11,13 +11,31 @@ def neuesprofil():
     npe.title("Advanced Feed | Neues Profil erstellen")
     npe.geometry("600x500-600+600")
 #NPE Aktionen-------------------------------------------------
+    def fertig():
+        print("Profil Name: %s" % (pne.get()))
+
+    profilname = Label(master=npe,
+                    font=("Arial", 10),
+                    text="Name des Profils:",
+                    width = 20)
+
+    interessen = Label(master=npe,
+                      font=("Arial", 10),
+                      text="Deine Interssen?",
+                      width = 20)
+    
+    pne = Entry(npe, width=30)
+    
     fertig = Button(master=npe,
                text="Fertig",
-               command=quit,
+               command=fertig,
                font=("Arial", 10), fg="green")
 
-    fertig.grid(column=1, row=1)
-     
+    fertig.grid(column=3, row=2)
+    profilname.grid(column=1, row=1)
+    pne.grid(column=2, row=1)
+    interessen.grid(column=1, row=2)
+
 #------------------------------------------------------------
 
 def altesprofil():
@@ -77,7 +95,7 @@ pa.geometry('450x100-700+350')
 np=0
 ap=0
 x=0
-
+own.error.FileDataError()
 #Buttons
 #----------------------------------------------
 neues_profil = Button(master=pa,
