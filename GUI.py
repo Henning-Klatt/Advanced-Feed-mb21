@@ -13,6 +13,44 @@ def neuesprofil():
 #NPE Aktionen-------------------------------------------------
     def fertig():
         print("Profil Name: %s" % (pne.get()))
+        npe.destroy()
+#Interessen def-----------------------------------------------
+
+
+    CheckVar0 = IntVar()
+    CheckVar1 = IntVar()
+    CheckVar2 = IntVar()
+    CheckVar3 = IntVar()
+
+    def technik():
+        if CheckVar0.get() == 0:
+            technik=0
+        else:
+           print("Technik")
+           technik=1
+
+    def sport():
+        if CheckVar1.get() == 0:
+            sport=0
+        else:
+            print("Sport")
+            sport=1
+
+    def tierwelt():
+        if CheckVar2.get() == 0:
+            tierwelt=0
+        else:
+            print("Tierwelt")
+            tierwelt=1
+
+    def pflanzen():
+        if CheckVar3.get() == 0:
+            pflanzen=0
+        else:
+            print("Pflanzen")
+            pflanzen=0
+        
+       
 
     profilname = Label(master=npe,
                     font=("Arial", 10),
@@ -21,8 +59,8 @@ def neuesprofil():
 
     interessen = Label(master=npe,
                       font=("Arial", 10),
-                      text="Deine Interssen?",
-                      width = 20)
+                      text="Markiere deine Interessen!",
+                      width = 30)
     
     pne = Entry(npe, width=30)
     
@@ -31,10 +69,25 @@ def neuesprofil():
                command=fertig,
                font=("Arial", 10), fg="green")
 
-    fertig.grid(column=3, row=2)
+    abbrechen= Button(master=npe,
+                text="Abbrechen",
+                command=quit,
+                font=("Arial", 10), fg="red")
+
+    c0 = Checkbutton(npe, text = "Technik", variable = CheckVar0, onvalue = 1, offvalue = 0, height=3, width = 20, command = technik)
+    c1 = Checkbutton(npe, text = "Sport", variable = CheckVar1, onvalue = 1, offvalue = 0, height=3, width = 20, command = sport)
+    c2 = Checkbutton(npe, text = "Tierwelt", variable = CheckVar2, onvalue = 1, offvalue = 0, height=3, width = 20, command = tierwelt)
+    c3 = Checkbutton(npe, text = "Pflanzen", variable = CheckVar3, onvalue = 1, offvalue = 0, height=3, width = 20, command = pflanzen)
+
+    fertig.grid(column=3, row=7)
+    abbrechen.grid(column=2, row=7)
     profilname.grid(column=1, row=1)
     pne.grid(column=2, row=1)
     interessen.grid(column=1, row=2)
+    c0.grid(column=1, row=3)
+    c1.grid(column=1, row=4)
+    c2.grid(column=1, row=5)
+    c3.grid(column=1, row=6)
 
 #------------------------------------------------------------
 
@@ -74,7 +127,7 @@ def altesprofil():
     akprofil = Label(master=main,
                  font=("Arial", 10),
                  text=(f),
-                 width = 30)
+                 width = 50)
 
     headline.grid(column=1, row=1)
     scrollbar.grid(column=1, row=1)
@@ -111,6 +164,7 @@ altes_profil = Button(master=pa,
 close2 = Button(master=pa,
                text="Schliessen",
                command=quit,
+
                font=("Arial", 10), fg="red")
 
 
