@@ -16,7 +16,7 @@ def neuesprofil():
     def fertig():
         print("Profil Name: %s" % (pne.get()))
         os.system("mkdir Advanced_Feed_profile") #Erstellt den profile ordner
-        messagebox.showinfo("Advanced Feed", "Wähle bitte nun deinen Speicherort")
+        messagebox.showinfo("Advanced Feed", "Wählen sie bitte nun ihren Speicherort")
         s = filedialog.asksaveasfilename() #Sucht den Speicherort
         print("Speicherort:")
         print(s)
@@ -64,7 +64,7 @@ def neuesprofil():
 
     interessen = Label(master=npe,
                       font=("Arial", 10),
-                      text="Markiere deine Interessen!",
+                      text="Markieren sie bitte ihre Interessen!",
                       width = 30)
     
     pne = Entry(npe, width=30)
@@ -80,7 +80,7 @@ def neuesprofil():
                 font=("Arial", 10), fg="red")
 
     c0 = Checkbutton(npe, text = "Technik", variable = CheckVar0, onvalue = 1, offvalue = 0, height=3, width = 20, command = technik)
-    c1 = Checkbutton(npe, text = "Sport", variable = CheckVar1, onvalue = 1, offvalue = 0, height=3, width = 20, command = sport)
+    c1 = Checkbutton(npe, text = "    Sport", variable = CheckVar1, onvalue = 1, offvalue = 0, height=3, width = 20, command = sport)
     c2 = Checkbutton(npe, text = "Tierwelt", variable = CheckVar2, onvalue = 1, offvalue = 0, height=3, width = 20, command = tierwelt)
     c3 = Checkbutton(npe, text = "Pflanzen", variable = CheckVar3, onvalue = 1, offvalue = 0, height=3, width = 20, command = pflanzen)
 
@@ -112,14 +112,19 @@ def altesprofil():
     main.config(menu=menubar)
 
     def überuns():
-        messagebox.showinfo("Advanced Feed | Über uns", "Advanced Feed 0.2 Alpha         produced by Fabian Geiselhart und Henning Klatt.                  Published: 17.7.2015                  More Information: advancedfeed.ddns.net")
+        messagebox.showinfo("Advanced Feed | Über uns", "Advanced Feed 0.3 Alpha         produced by Fabian Geiselhart und Henning Klatt.                  Published: 17.7.2015                  More Information: advancedfeed.ddns.net")
 
     def feedüber1():
         messagebox.showinfo("Feedüberschrift 1", "Hier dann die genauere Beschreibung auch als Variable")
 
+    def feedüber2():
+        messagebox.showinfo("Feedüberschrift 2", "Hier dann die genauere Beschreibung auch als Variable")
+    
+
     
     feedüb1 = "Das ist die Überschriftsvariable 1"
-
+    feedüb2 = "Das ist die Überschriftsvariable 2"
+    
     menubar.add_command(label="anderes Profil laden | ",
                     command=altesprofil)
 
@@ -131,7 +136,7 @@ def altesprofil():
 
     headline = Label(master=main,
                 font=("Arial", 17),
-                text="Hier ist dein persönlicher Feed:",
+                text="Hier ist ihr persönlicher Feed:",
                 width = 30)
 
     akprüb = Label(master=main,
@@ -150,8 +155,11 @@ def altesprofil():
 
     w2 = Canvas(master=main,
                width=500,#Länge der Linie
-               height=20)#Abstand zum Textfeld
-
+               height=30)#Abstand zum Textfeld
+    
+    w3 = Canvas(master=main,
+               width=500,#Länge der Linie
+               height=30)#Abstand zum Textfeld
     
 
     canvas_width = 100
@@ -159,6 +167,7 @@ def altesprofil():
     y = int(canvas_height / 15)
     w.create_line(0, y, 300, y, fill="#476042")
     w2.create_line(0, y, 300, y, fill="#476042")
+    w3.create_line(0, y, 300, y, fill="#476042")
 
     feedüberschrift1 = Button(master=main,
                               text=(feedüb1),
@@ -167,6 +176,12 @@ def altesprofil():
                               command=feedüber1,
                               font=("Arial", 15))
 
+    feedüberschrift2 = Button(master=main,
+                              text=(feedüb2),
+                              width = 30,
+                              height = 1,
+                              command=feedüber2,
+                              font=("Arial", 15))
 
 
     headline.grid(column=1, row=1)
@@ -175,9 +190,9 @@ def altesprofil():
     akprüb.grid(column=1, row=2)
     w.grid(column=1, row=3)
     w2.grid(column=1, row=5)
+    w3.grid(column=1, row=7)
     feedüberschrift1.grid(column=1, row=4)
-
-    
+    feedüberschrift2.grid(column=1, row=6)
     
 #Tkinter
 #-----------------------------------------------
@@ -215,7 +230,7 @@ close2 = Button(master=pa,
 #--------------------------------------------
 frage = Label(master=pa,
              font=("Arial", 10),
-             text="Bist du ein neuling?",
+             text="Haben sie bereits ein Profil?",
              width = 30)
 
 #Das Layout
