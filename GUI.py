@@ -1,6 +1,8 @@
 from tkinter import *
 import own
-
+import os
+from tkinter import messagebox
+import time as sleep
 #Definitionen
 #-----------------------------------------------
 def neuesprofil():
@@ -13,9 +15,12 @@ def neuesprofil():
 #NPE Aktionen-------------------------------------------------
     def fertig():
         print("Profil Name: %s" % (pne.get()))
-        npe.destroy()
-#Interessen def-----------------------------------------------
-
+        os.system("mkdir Advanced_Feed_profile") #Erstellt den profile ordner
+        messagebox.showinfo("Advanced Feed", "Wähle bitte nun deinen Speicherort")
+        s = filedialog.asksaveasfilename() #Sucht den Speicherort
+        print("Speicherort:")
+        print(s)
+        npe.destroy()                       #Zerstört das neues Profil erstellen Fenster#
 
     CheckVar0 = IntVar()
     CheckVar1 = IntVar()
@@ -89,31 +94,41 @@ def neuesprofil():
     c2.grid(column=1, row=5)
     c3.grid(column=1, row=6)
 
-#------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------
 
 def altesprofil():
     print("Altes Profil wird geladen...")
     f = filedialog.askopenfilename() #Sucht den Dateiname
     print (f)
     pa.destroy()
-#Main Fenster-------------------------------------------------
+    
     main = Tk()
     main.title("Advaned Feed | Projekt von Fabian & Henning")
     main.geometry('700x700-700+350')
 
-#Main Menü----------------------------------------------------
     menu = Menu(master=main)
     scrollbar = Scrollbar(master=main)
     menubar = Menu(master=main)
     main.config(menu=menubar)
 
-    menubar.add_command(label="anderes Profil laden |",
+    def überuns():
+        messagebox.showinfo("Advanced Feed | Über uns", "Advanced Feed 0.2 Alpha         produced by Fabian Geiselhart und Henning Klatt.                  Published: 17.7.2015                  More Information: advancedfeed.ddns.net")
+
+    def feedüber1():
+        messagebox.showinfo("Feedüberschrift 1", "Hier dann die genauere Beschreibung auch als Variable")
+
+    
+    feedüb1 = "Das ist die Überschriftsvariable 1"
+
+    menubar.add_command(label="anderes Profil laden | ",
                     command=altesprofil)
 
-    menubar.add_command(label="Exit |",
+    menubar.add_command(label="Über Uns | ",
+                    command=überuns)
+
+    menubar.add_command(label="Exit | ",
                     command=quit)
 
-#Main Gadgets------------------------------------------------
     headline = Label(master=main,
                 font=("Arial", 17),
                 text="Hier ist dein persönlicher Feed:",
@@ -122,17 +137,45 @@ def altesprofil():
     akprüb = Label(master=main,
                    font=("Arial", 10),
                          text="geladenes Profil:",
-                         width = 30)
+                         width = 13,#Breite des Textfeldes
+                         height = 3)#Abstand zum Textfeldes
 
     akprofil = Label(master=main,
                  font=("Arial", 10),
                  text=(f),
                  width = 50)
+    w = Canvas(master=main,
+               width=500,#Länge der Linie
+               height=30)#Abstand zum Textfeld
+
+    w2 = Canvas(master=main,
+               width=500,#Länge der Linie
+               height=20)#Abstand zum Textfeld
+
+    
+
+    canvas_width = 100
+    canvas_height = 100
+    y = int(canvas_height / 15)
+    w.create_line(0, y, 300, y, fill="#476042")
+    w2.create_line(0, y, 300, y, fill="#476042")
+
+    feedüberschrift1 = Button(master=main,
+                              text=(feedüb1),
+                              width = 30,
+                              height = 1,
+                              command=feedüber1,
+                              font=("Arial", 15))
+
+
 
     headline.grid(column=1, row=1)
     scrollbar.grid(column=1, row=1)
     akprofil.grid(column=2,row=2)
     akprüb.grid(column=1, row=2)
+    w.grid(column=1, row=3)
+    w2.grid(column=1, row=5)
+    feedüberschrift1.grid(column=1, row=4)
 
     
     
@@ -140,7 +183,7 @@ def altesprofil():
 #-----------------------------------------------
 pa = Tk()
 pa.title("Advaned Feed | Wähle!")
-pa.geometry('450x100-700+350')
+pa.geometry('480x100-700+350')
 
 #Menüpunkte:
 
@@ -157,7 +200,7 @@ neues_profil = Button(master=pa,
                 font=("Arial", 10), fg="green")
 
 altes_profil = Button(master=pa,
-                     text="altes Profil laden",
+                     text="existierendes Profil laden",
                      command=altesprofil,
                      font=("Arial", 10), fg="blue")
 
