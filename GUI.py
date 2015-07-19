@@ -1,8 +1,14 @@
 from tkinter import *
-import own
 import os
 from tkinter import messagebox
 import time as sleep
+import error
+import feed
+import profile
+import pickle
+feed = []# Leert die Globalen Variablen
+hobby = []
+usenet = []
 #Definitionen
 #-----------------------------------------------
 def neuesprofil():
@@ -11,49 +17,101 @@ def neuesprofil():
 #Neues Profil ertsellen Fenster-------------------------------
     npe = Tk()
     npe.title("Advanced Feed | Neues Profil erstellen")
-    npe.geometry("600x500-600+600")
+    npe.geometry("450x100-300+300")
 #NPE Aktionen-------------------------------------------------
+    
+            
     def fertig():
         print("Profil Name: %s" % (pne.get()))
-        os.system("mkdir Advanced_Feed_profile") #Erstellt den profile ordner
-        messagebox.showinfo("Advanced Feed", "Wählen sie bitte nun ihren Speicherort")
-        s = filedialog.asksaveasfilename() #Sucht den Speicherort
-        print("Speicherort:")
-        print(s)
-        npe.destroy()                       #Zerstört das neues Profil erstellen Fenster#
+        npe.destroy()
+        npe2 = Tk()
+        npe2.title("Advanced Feed | Schritt 2")
+        npe2.geometry("450x100-300+300")
+         #--------------------------------
+        userfeedsinfo = Label(master=npe2,
+                              font=("Arail", 9),
+                              text="Geben sie ihre RSS2 Feeds durch Leerzeichen getrennt ein!",
+                              width = 45)
 
-    CheckVar0 = IntVar()
-    CheckVar1 = IntVar()
-    CheckVar2 = IntVar()
-    CheckVar3 = IntVar()
+        feeds = Entry(npe2, width=30)
+        
+        def weiterlos():
+                npe2.destroy()
+                npe3 = Tk()
+                npe3.title("Advanced Feed | Schritt 3")
+                npe3.geometry("500x500-300+300")
+                
+        
+                CheckVar0 = IntVar()
+                CheckVar1 = IntVar()
+                CheckVar2 = IntVar()
+                CheckVar3 = IntVar()
 
-    def technik():
-        if CheckVar0.get() == 0:
-            technik=0
-        else:
-           print("Technik")
-           technik=1
+                def technik():
+                    if CheckVar0.get() == 0:
+                        technik=0
+                    else:
+                       print("Technik")
+                       technik=1
 
-    def sport():
-        if CheckVar1.get() == 0:
-            sport=0
-        else:
-            print("Sport")
-            sport=1
+                def sport():
+                    if CheckVar1.get() == 0:
+                        sport=0
+                    else:
+                        print("Sport")
+                        sport=1
 
-    def tierwelt():
-        if CheckVar2.get() == 0:
-            tierwelt=0
-        else:
-            print("Tierwelt")
-            tierwelt=1
+                def pflanzen():
+                    if CheckVar3.get() == 0:
+                        pflanzen=0
+                    else:
+                        print("Pflanzen")
+                        pflanzen=0
 
-    def pflanzen():
-        if CheckVar3.get() == 0:
-            pflanzen=0
-        else:
-            print("Pflanzen")
-            pflanzen=0
+                def tierwelt():
+                    if CheckVar2.get() == 0:
+                        tierwelt=0
+                    else:
+                        print("Tierwelt")
+                        tierwelt=1
+
+                def weiterlos2():
+                    npe3.destroy()
+                    npe4 = Tk()
+                    npe4.title("Advanced Feed | Schritt 4")
+                    npe4.geometry("300x300-300+300")
+
+                weiter = Button(master=npe3,
+                                text="Weiter",
+                                command=weiterlos2,
+                                font=("Arial", 10), fg="green")
+
+                info = Label(master=npe3,
+                             font=("Arial", 10),
+                             text="Bitte markieren sie ihre Interessen",
+                             width = 40)
+
+                c0 = Checkbutton(npe3, text = "Technik", variable = CheckVar0, onvalue = 1, offvalue = 0, height=3, width = 20, command = technik)
+                c1 = Checkbutton(npe3, text = "    Sport", variable = CheckVar1, onvalue = 1, offvalue = 0, height=3, width = 20, command = sport)
+                c2 = Checkbutton(npe3, text = "Tierwelt", variable = CheckVar2, onvalue = 1, offvalue = 0, height=3, width = 20, command = tierwelt)
+                c3 = Checkbutton(npe3, text = "Pflanzen", variable = CheckVar3, onvalue = 1, offvalue = 0, height=3, width = 20, command = pflanzen)
+
+                
+                info.grid(column=1, row=1)
+                c0.grid(column=1, row=2)
+                c1.grid(column=1, row=3)
+                c2.grid(column=1, row=4)
+                c3.grid(column=1, row=5)
+                weiter.grid(column=2, row=6)
+
+        weiter = Button(master=npe2,
+                text="weiter",
+                command=weiterlos,
+                font=("Arial", 10), fg="green")
+            
+        userfeedsinfo.grid(column=1, row=1)
+        feeds.grid(column=1, row=2)
+        weiter.grid(column=2, row=3)
         
        
 
@@ -61,16 +119,9 @@ def neuesprofil():
                     font=("Arial", 10),
                     text="Name des Profils:",
                     width = 20)
-
-    interessen = Label(master=npe,
-                      font=("Arial", 10),
-                      text="Markieren sie bitte ihre Interessen!",
-                      width = 30)
-    
-    pne = Entry(npe, width=30)
     
     fertig = Button(master=npe,
-               text="Fertig",
+               text="Weiter",
                command=fertig,
                font=("Arial", 10), fg="green")
 
@@ -78,21 +129,13 @@ def neuesprofil():
                 text="Abbrechen",
                 command=quit,
                 font=("Arial", 10), fg="red")
+    pne = Entry(npe, width=30)
+    
 
-    c0 = Checkbutton(npe, text = "Technik", variable = CheckVar0, onvalue = 1, offvalue = 0, height=3, width = 20, command = technik)
-    c1 = Checkbutton(npe, text = "    Sport", variable = CheckVar1, onvalue = 1, offvalue = 0, height=3, width = 20, command = sport)
-    c2 = Checkbutton(npe, text = "Tierwelt", variable = CheckVar2, onvalue = 1, offvalue = 0, height=3, width = 20, command = tierwelt)
-    c3 = Checkbutton(npe, text = "Pflanzen", variable = CheckVar3, onvalue = 1, offvalue = 0, height=3, width = 20, command = pflanzen)
-
-    fertig.grid(column=3, row=7)
-    abbrechen.grid(column=2, row=7)
+    fertig.grid(column=2, row=8)
+    abbrechen.grid(column=1, row=8)
     profilname.grid(column=1, row=1)
     pne.grid(column=2, row=1)
-    interessen.grid(column=1, row=2)
-    c0.grid(column=1, row=3)
-    c1.grid(column=1, row=4)
-    c2.grid(column=1, row=5)
-    c3.grid(column=1, row=6)
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -100,6 +143,7 @@ def altesprofil():
     print("Altes Profil wird geladen...")
     f = filedialog.askopenfilename() #Sucht den Dateiname
     print (f)
+    profile.load(f, feed, hobby, usenet)
     pa.destroy()
     
     main = Tk()
@@ -112,7 +156,7 @@ def altesprofil():
     main.config(menu=menubar)
 
     def überuns():
-        messagebox.showinfo("Advanced Feed | Über uns", "Advanced Feed 0.3 Alpha         produced by Fabian Geiselhart und Henning Klatt.                  Published: 17.7.2015                  More Information: advancedfeed.ddns.net")
+        messagebox.showinfo("Advanced Feed | Über uns", "Advanced Feed 0.2 Alpha         produced by Fabian Geiselhart und Henning Klatt.                  Published: 17.7.2015                  More Information: advancedfeed.ddns.net")
 
     def feedüber1():
         messagebox.showinfo("Feedüberschrift 1", "Hier dann die genauere Beschreibung auch als Variable")
@@ -198,7 +242,7 @@ def altesprofil():
 #-----------------------------------------------
 pa = Tk()
 pa.title("Advaned Feed | Wähle!")
-pa.geometry('480x100-700+350')
+pa.geometry('400x100-700+350')
 
 #Menüpunkte:
 
@@ -206,16 +250,16 @@ pa.geometry('480x100-700+350')
 np=0
 ap=0
 x=0
-own.error.FileDataError()
+#error.FileDataError()
 #Buttons
 #----------------------------------------------
 neues_profil = Button(master=pa,
-                text="neues Profil erstellen",
+                text="Nein",
                 command=neuesprofil,
                 font=("Arial", 10), fg="green")
 
 altes_profil = Button(master=pa,
-                     text="existierendes Profil laden",
+                     text="Ja",
                      command=altesprofil,
                      font=("Arial", 10), fg="blue")
 
@@ -230,8 +274,8 @@ close2 = Button(master=pa,
 #--------------------------------------------
 frage = Label(master=pa,
              font=("Arial", 10),
-             text="Haben sie bereits ein Profil?",
-             width = 30)
+             text="Wollen sie ein existierendes Profil laden?",
+             width = 34)
 
 #Das Layout
 #------Profil-Auswahl-----------------------
