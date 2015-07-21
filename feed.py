@@ -1,26 +1,27 @@
 #! /usr/bin/python3
 from urllib.request import *
 import os
+import pprint
 """
 ===============================================================
 Project Name:        Advanced Feed
 Autor:               Fabian Geiselhart
 Erstelldatum:        13.7.15
-Zuletzt Bearbeitet:  16.7.15
+Zuletzt Bearbeitet:  21.7.15
 Typ:                 Python 3 RSS Feed Klasse
 Description:         Klasse zum Download und der auswertung eines RSS FEEDS
 ===============================================================
 """
 #Download des Feed Codes
 #---------------------------------------------------------------
-def down(feed, profil):
+def down(feed, z):
     feed = check(feed) #Feed Kontrollieren
     text = str(urlopen(feed).read(), encoding="utf-8") #Text Downloaden
-    feedfolder= "/usr/lib/Advanced-Feed/tmp/" #Pfad für Ordner Festlegen
-    if os.isdir(feedfolder) == False: #Wennder Ordner nicht erstellt ist:
-        os.mkdir(feedfolder)          #Erstelle ihn
-    os.chdir(feedfolder) #Wechsle in Ordner
-    file = open(feedfolder + "feed", "w")
+    tmpfolder= "/usr/lib/Advanced-Feed/tmp/" #Pfad für Ordner Festlegen
+    if os.isdir(tmpfolder) == False: #Wennder Ordner nicht erstellt ist:
+        os.mkdir(tmpfolder)          #Erstelle ihn
+    os.chdir(tmpfolder) #Wechsle in Ordner
+    file = open(feedfolder + "/" + z, "w")
     file = text
     
 
@@ -52,7 +53,61 @@ def check(feed):
     return feed
 
 
-#Speichert Array mit Posts und Vergleicht welche Posts noch nicht Gezeigt wurden
+#Läd alle Feeds in Dateien im tmp Ordner
+#---------------------------------------------------------------
+def GetAllFeeds(feedset):
+    y = 0 #Zähler = 0
+    for i in feedset:  #Alle Downloaden und Speichern
+        down(i, y)
+        y+=1
+    f = open("/usr/lib/Advanced-Feed/tmp/feedz", "w") #Anzahl Speichern
+    f.write(y) #Schreiben
+    f.close() #Schliesen
+    
+
+#Wertet alle in tmp Ordner gespeicherten Feeds aus und 
 #-----------------------------------------------------------------
-def ComparePosts(path):
-    pass
+def MakeOneFeedScript
+    f = open("/usr/lib/Advanced-Feed/tmp/feedz", "r") #Feedanzahl laden
+    z = f.read() #Feedanzahl auslesen
+    f.close() #Datei Schliesen
+    CFeedList = list(range(z))
+    #Listen Für 1. 2. 3. Post, usw,
+    1FeedList = [[0]*z]*6 #Liste für Posttime des 1. posts pro feed
+    for i in z: #Alle Daten aus Dateien Lesen
+        s = "/usr/lib/Advanced-Feed/tmp/" + i 'Speicherort Speichern
+        f = open(s, "r") #Öffnen
+        CFeedList[i] = f.read() #In Liste Speichern
+        f.close() #Schließen
+    y = 0 #Zähler auf 0
+    for i in CFeedList:
+        zw = i
+        x = zw.find("<item>") #Schauen wo interressanter Teil anfängt
+        zw = zw[x:] #Alles andere Wegschneiden
+        CFeedList[i] = zw
+    SnipList = CFeedList #Liste Kopieren
+    y = 0 #Zähler auf 0
+    zz1 = 0 #Zähjler 2 auf 0
+    #Nach dem 1. Post in JEDEM Feed suchen
+    for i in range(6):
+        for i in SnipList: #Alles einmal durchlaufen
+            try:
+                x = SnipList.find("<pubDate>") #Neustes Pub Date Finden
+                1FeedList[zz1][y] = i[x:(x-50)] #In Liste für post Time Sepichern
+                zw = i[8:] #Erstes <item> abschneiden
+                zw = zw.find("<item>") #Nächstes Item finden
+                SnipList[y] = zw #In SnipList Schreiben
+            except:
+                print("Str. ", y ,"Leer")
+            y+=1
+        zz1+=1
+    y = 0 #Zähler 1 auf 0
+    zz1 = 0 #Zähler 2 auf 0
+    neuePosts = [0]*6 #Liste für Text mit neusetm Post
+    zwlist = [0]*6 #Zwischen Speicher für PubDates
+    for i in 1FeedList[y]: #Alle Posts Durchgehen
+        for i in 1FeedList[y][zz1]: #
+            zwlist[zz1] = i
+        zz1+=1
+    y+=1
+        
